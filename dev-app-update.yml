@@ -1,0 +1,3 @@
+provider: generic
+url: https://apps.onwings.com:8050/update/ehr
+updaterCacheDirName: ehr-updater
