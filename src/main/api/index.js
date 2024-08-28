@@ -1,3 +1,7 @@
-import common from "./common";
+import login from "./login";
+import department from "./md/department";
 
-export { common };
+export {
+  login,
+  department
+};

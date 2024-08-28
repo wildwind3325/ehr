@@ -1,7 +1,7 @@
 {
   "name": "ehr",
   "version": "1.0.0",
-  "description": "An Electron HR application with Vue",
+  "description": "An Electron HR application using Vue",
   "main": "./out/main/index.js",
   "author": "wildwind3325",
   "homepage": "https://electron-vite.org",
@@ -18,7 +18,6 @@
   "dependencies": {
     "@electron-toolkit/preload": "^3.0.1",
     "@electron-toolkit/utils": "^3.0.0",
-    "electron-updater": "^6.1.7",
     "log4js": "^6.9.1",
     "sequelize": "^6.37.3",
     "sqlite3": "^5.1.7",

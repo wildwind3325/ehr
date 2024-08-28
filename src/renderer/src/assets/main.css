@@ -17,3 +17,19 @@ body,
   cursor: pointer;
   color: blue;
 }
+
+.toolbar {
+  display: flex;
+  height: 40px;
+}
+
+.toolbar-function {
+  display: flex;
+  align-items: center;
+  flex-grow: 1;
+}
+
+.toolbar-search {
+  display: flex;
+  align-items: center;
+}

@@ -2,10 +2,10 @@ import { app, shell, BrowserWindow, ipcMain } from 'electron';
 import { join } from 'path';
 import { electronApp, optimizer, is } from '@electron-toolkit/utils';
 import icon from '../../resources/icon.png?asset';
-import { autoUpdater } from 'electron-updater';
 
 var log4js = require('log4js');
 
+import './util/enhance';
 import * as api from './api';
 import * as env from './env';
 
@@ -30,6 +30,7 @@ function createWindow() {
 
   mainWindow.on('ready-to-show', () => {
     mainWindow.show();
+    mainWindow.maximize();
   });
 
   mainWindow.webContents.setWindowOpenHandler((details) => {
@@ -53,8 +54,12 @@ app.whenReady().then(() => {
 
   ipcMain.handle('api', async (event, ...args) => {
     try {
-      let method = api[args[0]][args[1]];
-      return await method.call(api[args[0]], args);
+      if (args.length < 2) throw new Error('调用参数错误');
+      let module = args[0], action = args[1], data = args[2] ? JSON.parse(args[2]) : {};
+      if (!api[module]) throw new Error('找不到模块');
+      let method = api[module][action];
+      if (!method) throw new Error('找不到方法');
+      return await method.call(api[module], data);
     } catch (err) {
       log4js.getLogger('error').error(err.message, err);
       return {
@@ -69,29 +74,6 @@ app.whenReady().then(() => {
   app.on('activate', function () {
     if (BrowserWindow.getAllWindows().length === 0) createWindow();
   });
-});
-
-autoUpdater.setFeedURL('https://apps.onwings.com:8050/update/ehr/');
-autoUpdater.autoDownload = false;
-log4js.getLogger().info('开始检查更新');
-autoUpdater.checkForUpdates();
-
-autoUpdater.on('update-available', function (info) {
-  log4js.getLogger().info('有更新可用');
-  autoUpdater.downloadUpdate();
-});
-
-autoUpdater.on('update-not-available', function (info) {
-  log4js.getLogger().info('无更新可用');
-});
-
-autoUpdater.on('download-progress', function (progressObj) {
-  log4js.getLogger().info('下载进度：' + progressObj.percent + '%');
-});
-
-autoUpdater.on('update-downloaded', function () {
-  log4js.getLogger().info('下载完毕开始安装');
-  autoUpdater.quitAndInstall();
 });
 
 app.on('window-all-closed', () => {
