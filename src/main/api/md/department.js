@@ -6,19 +6,27 @@ class DepartmentController {
 
   async list(data) {
     let db = new DB();
-    let result = await db.findByPage({
-      fields: [],
-      table: 'department',
-      where: '',
-      params: {},
-      pageSize: data.pageSize,
-      pageNumber: data.pageNumber,
-      orderBy: ''
-    });
-    return {
-      code: 0,
-      data: result
-    };
+    if (data.pageSize) {
+      let result = await db.findByPage({
+        fields: [],
+        table: 'department',
+        where: '',
+        params: {},
+        pageSize: data.pageSize,
+        pageNumber: data.pageNumber,
+        orderBy: ''
+      });
+      return {
+        code: 0,
+        data: result
+      };
+    } else {
+      let list = await db.find('select * from `department`');
+      return {
+        code: 0,
+        data: list
+      };
+    }
   }
 
   async add(data) {

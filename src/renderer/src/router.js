@@ -20,6 +20,10 @@ const routes = [{
     path: '/md/department',
     name: 'Department',
     component: () => import('./views/md/Department.vue')
+  }, {
+    path: '/md/employee',
+    name: 'Employee',
+    component: () => import('./views/md/Employee.vue')
   }]
 }, {
   path: '/:pathMatch(.*)',

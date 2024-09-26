@@ -27,6 +27,12 @@
               </el-icon>
               <span>部门管理</span>
             </el-menu-item>
+            <el-menu-item index="/md/employee">
+              <el-icon>
+                <Document />
+              </el-icon>
+              <span>员工管理</span>
+            </el-menu-item>
           </el-sub-menu>
         </el-menu>
       </el-scrollbar>

@@ -55,27 +55,20 @@ export default {
   },
   methods: {
     async query(pageNumber) {
-      try {
-        let res = await api.call('department', 'list', JSON.stringify({
-          pageSize: 10,
-          pageNumber: pageNumber || this.pageNumber
-        }));
-        if (res.code !== 0) {
-          this.$message({
-            type: 'error',
-            message: '加载数据失败：' + res.msg
-          });
-        } else {
-          this.total = res.data.total;
-          this.pageNumber = res.data.pageNumber;
-          this.items = res.data.rows;
-          if (this.editIndex >= 0) this.cancel();
-        }
-      } catch (err) {
+      let res = await api.call('department', 'list', JSON.stringify({
+        pageSize: 10,
+        pageNumber: pageNumber || this.pageNumber
+      }));
+      if (res.code !== 0) {
         this.$message({
           type: 'error',
-          message: '加载数据失败：' + err.message
+          message: '加载数据失败：' + res.msg
         });
+      } else {
+        this.total = res.data.total;
+        this.pageNumber = res.data.pageNumber;
+        this.items = res.data.rows;
+        if (this.editIndex >= 0) this.cancel();
       }
     },
     add() {
